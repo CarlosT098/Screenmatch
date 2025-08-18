@@ -3,12 +3,19 @@ package br.com.alura.screenmatch.principal;
 import br.com.alura.screenmatch.model.DadosEpisodio;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
+import br.com.alura.screenmatch.model.Episodio;
 import br.com.alura.screenmatch.service.ConsumoAPI;
 import br.com.alura.screenmatch.service.ConverterDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner leitura = new Scanner(System.in);
@@ -33,5 +40,41 @@ public class Principal {
         temporadas.forEach(System.out::println);
 
         temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+
+        List<DadosEpisodio> dadosEpisodios = temporadas.stream()
+        .flatMap(t -> t.episodios().stream())
+        .collect(Collectors.toList());
+
+        System.out.println("\n TOP 5 EPISODIOS");
+
+        dadosEpisodios.stream()
+        .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+        .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+        .limit(5)
+        .forEach(System.out::println);
+
+        List<Episodio> episodios = temporadas.stream()
+        .flatMap(t -> t.episodios().stream()
+        .map(d -> new Episodio(t.numero(), d)))
+        .collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
+
+        System.out.println("Digite a partir de que ano deseja ver: ");
+        var ano = leitura.nextInt();
+        leitura.nextLine();
+
+        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodios.stream()
+            .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+            .forEach(e -> System.out.println(
+                "Temporada: " + e.getTeporada() + 
+                "Episodio: " + e.getTitulo() +
+                "Data de lancamento: " + e.getDataLancamento().format(formatador)
+            ));
+
     }
 }

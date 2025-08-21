@@ -4,38 +4,36 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Episodio {
-
-    private Integer teporada;
+    private Integer temporada;
     private String titulo;
-    private Integer numero;
+    private Integer numeroEpisodio;
     private Double avaliacao;
     private LocalDate dataLancamento;
 
     public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio) {
-        this.teporada = numeroTemporada;
+        this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
-        this.numero = dadosEpisodio.numero();
+        this.numeroEpisodio = dadosEpisodio.numero();
+
         try {
             this.avaliacao = Double.valueOf(dadosEpisodio.avaliacao());
         } catch (NumberFormatException ex) {
             this.avaliacao = 0.0;
         }
-        
+
         try {
             this.dataLancamento = LocalDate.parse(dadosEpisodio.dataLancamento());
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException ex) {
             this.dataLancamento = null;
         }
-        
-
     }
 
-    public Integer getTeporada() {
-        return teporada;
+    public Integer getTemporada() {
+        return temporada;
     }
 
-    public void setTeporada(Integer teporada) {
-        this.teporada = teporada;
+    public void setTemporada(Integer temporada) {
+        this.temporada = temporada;
     }
 
     public String getTitulo() {
@@ -46,12 +44,12 @@ public class Episodio {
         this.titulo = titulo;
     }
 
-    public Integer getNumero() {
-        return numero;
+    public Integer getNumeroEpisodio() {
+        return numeroEpisodio;
     }
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
+    public void setNumeroEpisodio(Integer numeroEpisodio) {
+        this.numeroEpisodio = numeroEpisodio;
     }
 
     public Double getAvaliacao() {
@@ -72,10 +70,10 @@ public class Episodio {
 
     @Override
     public String toString() {
-        return "teporada=" + teporada + ", titulo=" + titulo + ", numero=" + numero + ", avaliacao="
-                + avaliacao + ", dataLancamento=" + dataLancamento;
+        return "temporada=" + temporada +
+                ", titulo='" + titulo + '\'' +
+                ", numeroEpisodio=" + numeroEpisodio +
+                ", avaliacao=" + avaliacao +
+                ", dataLancamento=" + dataLancamento ;
     }
-
-    
-
 }

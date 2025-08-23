@@ -6,15 +6,7 @@ import java.util.OptionalDouble;
 
 import br.com.alura.screenmatch.service.ConsultaChatGPT;
 import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "series")
@@ -35,7 +27,7 @@ public class Serie {
     private String poster;
     private String sinopse;
 
-    @Transient
+    @OneToMany(mappedBy = "serie")
     private List<Episodio> episódios = new ArrayList<>();
 
     public Serie(){}

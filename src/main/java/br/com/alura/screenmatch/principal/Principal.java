@@ -30,7 +30,7 @@ public class Principal {
         while (opcao != 0) {
             var menu = """
                     1 - Buscar séries
-                    2 - Buscar episódios
+                    2 - Buscar episodios
                     3 - Listar Series buscadas
                     4 - Buscar Serie por titulo
                     5 - Buscar Serie por ator
@@ -182,7 +182,7 @@ public class Principal {
                             .map(e -> new Episodio(d.numero(), e)))
                     .collect(Collectors.toList());
 
-            serieEncontrada.setEpisódios(episodios);
+            serieEncontrada.setepisodios(episodios);
             repositorio.save(serieEncontrada);
         } else {
             System.out.println("Serie nao encontrada");

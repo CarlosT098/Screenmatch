@@ -50,4 +50,10 @@ public class SerieController {
         return serieService.obterTemporadaEspecifica(id, numero);
     }
 
+    @GetMapping("/categoria/{nomeGenero}")
+    public List<SerieDTO> obterPorGenero(@PathVariable String nomeGenero) {
+        return serieService.obterPorGenero(nomeGenero);
+    }
+    
+
 }

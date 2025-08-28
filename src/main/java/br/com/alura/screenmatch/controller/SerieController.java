@@ -14,17 +14,15 @@ import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.service.SerieService;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
 @RestController
 @RequestMapping("/series")
 public class SerieController {
     @Autowired
     private SerieService serieService;
-    
+
     @GetMapping
     public List<SerieDTO> obterSeries() {
-         return serieService.obterTodasSeries();
+        return serieService.obterTodasSeries();
     }
 
     @GetMapping("/top5")
@@ -36,16 +34,20 @@ public class SerieController {
     public List<SerieDTO> obterLancamentos() {
         return serieService.obterLancamentos();
     }
-    
+
     @GetMapping("/{id}")
     public SerieDTO obterPorId(@PathVariable Long id) {
         return serieService.obterPorId(id);
     }
-    
+
     @GetMapping("/{id}/temporadas/todas")
     public List<EpisodioDTO> obterTodasTemporadas(@PathVariable Long id) {
         return serieService.obterTodasTemporadas(id);
     }
-    
+
+    @GetMapping("/{id}/temporadas/{numero}")
+    public List<EpisodioDTO> obterTemporadaEspecifica(@PathVariable Long id, @PathVariable Long numero) {
+        return serieService.obterTemporadaEspecifica(id, numero);
+    }
 
 }
